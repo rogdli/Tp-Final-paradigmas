@@ -1,4 +1,4 @@
-const readline = require('readline-sync');
+const readline = require('readline-sync'); //Módulo que permite leer la entrada del usuario de manera síncrona, bloqueando la ejecución del programa hasta que se recibe la entrada del usuario.
 const Tarea = require('./Tarea');
 const Lista = require('./Lista');
 const kleur = require('kleur');/// Cambia de color texto en terminal 
@@ -91,7 +91,7 @@ function MenuCasoUno(){
 }
   
 function CasoUno() {
-    console.log(`${kleur.bgMagenta('1')} todo `);
+    console.log(`${kleur.bgMagenta('1')} Todas `);
     console.log(`${kleur.bgMagenta('2')} Pendientes`);
     console.log(`${kleur.bgMagenta('3')} Tareas en Curso`);
     console.log(`${kleur.bgMagenta('4')} Tareas Finalizadas`);
