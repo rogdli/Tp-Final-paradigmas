@@ -113,21 +113,6 @@ function detalle_tarea_complemento(lista, indice) {
                 return 'Desconocido';
         }
     }
-
-    // Función para obtener el texto correspondiente a la dificultad
-    function obtenerTextoDificultad(dificultad) {
-        switch (dificultad) {
-            case 1:
-                return kleur.green(`Facil ${emoji.get('smile')}`);
-            case 2:
-                return kleur.yellow(`Medio ${emoji.get('neutral_face')}`);
-                 
-            case 3:
-                return kleur.red(`Dificil ${emoji.get('rage')}`);
-            default:
-                return 'Desconocido';
-        }
-    }
     console.log(separador);
     console.log("Detalles de la tarea:");
     console.log(`Título: ${elemento.titulo}`);
@@ -139,7 +124,20 @@ function detalle_tarea_complemento(lista, indice) {
     console.log(`Fecha de Vencimiento: ${formatDate(elemento.vencimiento) || 'No especificada'}`);
     console.log(separador);
 }
-
+// Función para obtener el texto correspondiente a la dificultad
+function obtenerTextoDificultad(dificultad) {
+    switch (dificultad) {
+        case 1:
+            return kleur.green(`Facil ${emoji.get('smile')}`);
+        case 2:
+            return kleur.yellow(`Medio ${emoji.get('neutral_face')}`);
+             
+        case 3:
+            return kleur.red(`Dificil ${emoji.get('rage')}`);
+        default:
+            return 'Desconocido';
+    }
+}
 // Función para formatear una fecha.
 function formatDate(dateString) {
     if (!dateString) {

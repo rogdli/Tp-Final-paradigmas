@@ -22,47 +22,11 @@ function ingresoOpcion() {
         return ingresoOpcion();  // Llamada recursiva en caso de error
     }
 }
-///Funcion procesar opcion, esta funcion va a servir como menu utilizando recursividad
+///Funcion procesar opcion, esta funcion va a servir para procesar las opciones del menu principal 
 function procesarOpcion(opcion) {
     switch (opcion) {
         case 1:
-            do {
-                CasoUno();
-                boton = readline.questionInt("Dime Cual de estas opciones deseas:\n");
-                console.clear();
-                switch (boton) {
-                    case 1:
-                        Lista.verLista_todo(Lista.lista);
-                        if (Lista.lista.length > 0) {
-                            Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
-                        }
-                        break;
-                    case 2:
-                        Lista.verLista_pendiente(Lista.lista);
-                        if (Lista.lista.length > 0) {
-                            Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
-                        }
-                        break;
-                    case 3:
-                        Lista.verLista_curso(Lista.lista);
-                        if (Lista.lista.length > 0) {
-                            Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
-                        }
-                        break;
-                    case 4:
-                        Lista.verLista_terminado(Lista.lista);
-                        if (Lista.lista.length > 0) {
-                            Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
-                        }
-                        break;
-                    case 5:
-                        condicion_caso_uno = 1;
-                        break;
-                    default:
-                        console.log("El valor Ingresado es incorrecto, inténtelo de nuevo \n");
-                        break;
-                }
-            } while (condicion_caso_uno === 0);
+                MenuCasoUno();///ejecuto sub menu con recursividad, para evitar usar do while
             break;
         case 2:
                 const encontrados = Tarea.buscar(Lista.lista); // buscar crea una sub lista con los objetos encontrados
@@ -73,19 +37,66 @@ function procesarOpcion(opcion) {
                 }
              break;
         case 3:
-             Lista.lista.push(Tarea.ingresar());
+                 Lista.lista.push(Tarea.ingresar());
             break;
         case 4:
                 console.log('\x1b[36mGracias por usar \x1b[35mAgenda\x1b[0m: no olvides organizar tus tareas \u2764️');
-                condicion = 1;
                 break;
         default:
                 console.log("Opcion incorrecta");
                 break;
         }
     }
-  
+///Funcion procesar opcion, esta funcion va a servir para procesar las opciones del submenu caso uno
+function procesarCasoUno(opcion){
+    
+    switch (opcion) {
+        case 1:
+            Lista.verLista_todo(Lista.lista);
+            if (Lista.lista.length > 0) {
+                Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
+            }
+            break;
+        case 2:
+            Lista.verLista_pendiente(Lista.lista);
+            if (Lista.lista.length > 0) {
+                Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
+            }
+            break;
+        case 3:
+            Lista.verLista_curso(Lista.lista);
+            if (Lista.lista.length > 0) {
+                Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
+            }
+            break;
+        case 4:
+            Lista.verLista_terminado(Lista.lista);
+            if (Lista.lista.length > 0) {
+                Lista.editar_detalle(Lista.lista, Lista.detalle_tarea(Lista.lista));
+            }
+            break;
+         case 5:
+                ///No se hace nada, pero es neceasrio que este el caso 5 
+            break;
+        default:
+            console.log("El valor Ingresado es incorrecto, inténtelo de nuevo \n");
+            break;
+    }
 
+}
+///ejecucion del sub menu caso uno con recursividad 
+function MenuCasoUno(){
+
+    CasoUno();
+    const opcion=ingresoOpcion();
+    console.clear();
+    procesarCasoUno(opcion);
+    if(opcion!==5){
+        MenuCasoUno();
+    }
+}
+  
+///ejecucion del menu principal con recursividad
 function menu(){
 
     introduccion();

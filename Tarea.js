@@ -24,41 +24,35 @@ function crearTarea(titulo, descripcion, vencimiento, dificultad) {
     nuevo.ultima_edicion=new Date();
     return nuevo;///Devuelvo objeto nuevo
 }
+///complemento de la funcion ingreso, el usuario ingresa el vencimiento y la funcion retorna el valor ingresado
+function ingresarFechaVencimiento() {
+    const fechaTexto = readline.question('Ingresa fecha de vencimiento (YYYY-MM-DD):\n');
+    vencimiento = new Date(fechaTexto);
 
+    if (isNaN(vencimiento.getTime())) {
+        console.log('Fecha no válida. Por favor, ingresa una fecha en el formato correcto.');
+        return ingresarFechaVencimiento();
+    }
+
+    return vencimiento;
+}
+///complemento de la funcion ingreso, el usuario ingresa la difucultad y la funcion retorna la dificultad ingresada 
+function ingresarDificultad() {
+    console.log(`${kleur.green(`1.Facil ${emoji.get('smile')}`)}\n${kleur.yellow(`2.Medio ${emoji.get('neutral_face')}`)}\n${kleur.red(`3.Dificil ${emoji.get('rage')}`)}`);
+    dificultad = readline.questionInt();
+
+    if (![1, 2, 3].includes(dificultad)) {
+        console.log('Opción no válida. Por favor, elige una dificultad válida.');
+        return ingresarDificultad();
+    }
+
+    return dificultad;
+}
 ///esta funcion devuelve un objeto tipo tarea y pide los valores que completaran al nuevo objeto tipo tarea 
 function ingresar() {
-    let titulo, descripcion, vencimiento, dificultad;
-
-    titulo = readline.question("Titulo: \n");
-    descripcion = readline.question("Descripcion: \n");
-
-    function ingresarFechaVencimiento() {
-        const fechaTexto = readline.question('Ingresa fecha de vencimiento (YYYY-MM-DD):\n');
-        vencimiento = new Date(fechaTexto);
-
-        if (isNaN(vencimiento.getTime())) {
-            console.log('Fecha no válida. Por favor, ingresa una fecha en el formato correcto.');
-            return ingresarFechaVencimiento();
-        }
-
-        return vencimiento;
-    }
-
-    vencimiento = ingresarFechaVencimiento();
-
-    function ingresarDificultad() {
-        console.log(`${kleur.green(`1.Facil ${emoji.get('smile')}`)}\n${kleur.yellow(`2.Medio ${emoji.get('neutral_face')}`)}\n${kleur.red(`3.Dificil ${emoji.get('rage')}`)}`);
-        dificultad = readline.questionInt();
-
-        if (![1, 2, 3].includes(dificultad)) {
-            console.log('Opción no válida. Por favor, elige una dificultad válida.');
-            return ingresarDificultad();
-        }
-
-        return dificultad;
-    }
-
-    return crearTarea(titulo, descripcion, vencimiento, ingresarDificultad());
+    const titulo = readline.question("Titulo: \n");
+    const descripcion = readline.question("Descripcion: \n");
+    return crearTarea(titulo, descripcion, ingresarFechaVencimiento(), ingresarDificultad());
 }
 
 function editar(x) {
