@@ -62,26 +62,31 @@ function ingresar() {
 }
 
 function editar(x) {
+    function leerEstado() {
+        console.log(`${kleur.red(`1. Pendiente ${emoji.get('tada')}`)}\n${kleur.yellow(`2. En curso  ${emoji.get('hourglass')}`)}\n${kleur.green(`3. Finalizado ${emoji.get('white_check_mark')}`)}`);
+        const estado = readline.questionInt();
+        return (estado === 1 || estado === 2 || estado === 3) ? estado : leerEstado();
+    }
+
+    function leerFecha() {
+        const fechaTexto = readline.question('Ingresa fecha limite (YYYY-MM-DD): ');
+        const fecha = new Date(fechaTexto);
+        return isNaN(fecha.getTime()) ? leerFecha() : fecha;
+    }
+
+    function leerDificultad() {
+        console.log(`${kleur.green(`1. Facil ${emoji.get('smile')}`)}\n${kleur.yellow(`2. Medio ${emoji.get('neutral_face')}`)}\n${kleur.red(`3. Dificil ${emoji.get('rage')}`)}`);
+        const dificultad = readline.questionInt();
+        return (dificultad === 1 || dificultad === 2 || dificultad === 3) ? dificultad : leerDificultad();
+    }
+
     x.titulo = readline.question("Titulo: \n");
     x.descripcion = readline.question("Descripcion: \n");
-    x.estado=5;
-    while (x.estado != 1 && x.estado != 2 && x.estado != 3) {
-        ///utilizo un console.log en vez de poner la descripcion en el questionInt, porque si no no muestra los emojis
-        console.log(`${kleur.red(`1. Pendiente ${emoji.get('tada')}`)}\n${ kleur.yellow(`2. En curso  ${emoji.get('hourglass')}`)}\n${kleur.green(`3. Finalizado ${emoji.get('white_check_mark')}`)}`);
-        x.estado = readline.questionInt();
-    }
+    x.estado = leerEstado();
     x.ultima_edicion = new Date();
-    do {
-        const fechaTexto = readline.question('Ingresa fecha limite (YYYY-MM-DD): ');
-        x.vencimiento = new Date(fechaTexto);
-    } while (isNaN(x.vencimiento.getTime()));
-    ///utilizo un console.log en vez de poner la descripcion en el questionInt, porque si no no muestra los emojis
-    x.dificultad=5;
-    while (x.dificultad != 1 && x.dificultad != 2 && x.dificultad != 3) {
-        ///utilizo un console.log en vez de poner la descripcion en el questionInt, porque si no no muestra los emojis
-        console.log(`${kleur.green(`1.Facil ${emoji.get('smile')}`)}\n${kleur.yellow(`2.Medio ${emoji.get('neutral_face')}`)}\n${kleur.red(`3.Dificil ${emoji.get('rage')}`)}`);
-        x.dificultad = readline.questionInt();
-    }
+    x.vencimiento = leerFecha();
+    x.dificultad = leerDificultad();
+
     console.log("Datos guardados!\n");
 }
 
